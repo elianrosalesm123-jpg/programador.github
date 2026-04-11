@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Elian Rosales — Desarrollador Web</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+ 
+    :root {
+      --bg: #1C1F26;
+      --surface: #252830;
+      --ink: #EDEEF2;
+      --ink-muted: #9A9DAA;
+      --ink-faint: #5A5D6A;
+      --accent: #5B8DEF;
+      --accent-light: rgba(91,141,239,0.12);
+      --border: rgba(255,255,255,0.08);
+      --radius: 16px;
+    }
+ 
+    html { scroll-behavior: smooth; }
+ 
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+ 
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.1rem 2.5rem;
+      background: rgba(28,31,38,0.88);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.15rem;
+      color: var(--ink);
+      text-decoration: none;
+      letter-spacing: -0.01em;
+    }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a {
+      font-size: 0.875rem;
+      font-weight: 400;
+      color: var(--ink-muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--ink); }
+ 
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 8rem 2.5rem 4rem;
+      max-width: 900px;
+      margin: 0 auto;
+      position: relative;
+    }
+    .hero-eyebrow {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 6px 16px;
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: var(--ink-muted);
+      margin-bottom: 2rem;
+      width: fit-content;
+      animation: fadeUp 0.6s ease both;
+    }
+    .dot { width: 7px; height: 7px; border-radius: 50%; background: #22C55E; }
+ 
+    .hero h1 {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(3rem, 8vw, 5.5rem);
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+      color: var(--ink);
+      animation: fadeUp 0.6s 0.1s ease both;
+    }
+    .hero h1 em {
+      font-style: italic;
+      color: var(--accent);
+    }
+    .hero-sub {
+      margin-top: 1.5rem;
+      font-size: 1.05rem;
+      font-weight: 300;
+      color: var(--ink-muted);
+      max-width: 520px;
+      line-height: 1.7;
+      animation: fadeUp 0.6s 0.2s ease both;
+    }
+    .hero-actions {
+      display: flex; gap: 1rem; margin-top: 2.5rem; flex-wrap: wrap;
+      animation: fadeUp 0.6s 0.3s ease both;
+    }
+    .btn-primary {
+      background: transparent;
+      color: #ffffff;
+      border: 1px solid rgba(255,255,255,0.35);
+      border-radius: 999px;
+      padding: 0.85rem 2rem;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 500;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background 0.2s, transform 0.15s;
+    }
+    .btn-primary:hover { background: rgba(255,255,255,0.1); transform: translateY(-1px); }
+    .btn-secondary {
+      background: transparent;
+      color: var(--ink);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 0.85rem 2rem;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 500;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background 0.2s, transform 0.15s;
+    }
+    .btn-secondary:hover { background: var(--surface); transform: translateY(-1px); }
+ 
+    .hero-flag {
+      position: absolute; right: 2.5rem; bottom: 4rem;
+      display: flex; align-items: center; gap: 8px;
+      font-size: 0.8rem; color: var(--ink-faint);
+      animation: fadeUp 0.6s 0.4s ease both;
+    }
+ 
+    /* ── DIVIDER ── */
+    .divider {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 0 2.5rem;
+    }
+ 
+    /* ── SECTION WRAPPER ── */
+    .section {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 5rem 2.5rem;
+    }
+    .section-label {
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--ink-faint);
+      margin-bottom: 2.5rem;
+    }
+ 
+    /* ── SERVICES ── */
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+    .service-item {
+      background: var(--surface);
+      padding: 2rem 1.75rem;
+      transition: background 0.2s;
+    }
+    .service-item:hover { background: var(--accent-light); }
+    .service-num {
+      font-family: 'DM Serif Display', serif;
+      font-size: 2rem;
+      color: #ffffff;
+      line-height: 1;
+      margin-bottom: 1.25rem;
+    }
+    .service-item h3 {
+      font-size: 1rem;
+      font-weight: 500;
+      color: var(--ink);
+      margin-bottom: 0.5rem;
+    }
+    .service-item p {
+      font-size: 0.875rem;
+      font-weight: 300;
+      color: var(--ink-muted);
+      line-height: 1.6;
+    }
+ 
+    /* ── ABOUT ── */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: start;
+    }
+    .about-text h2 {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(2rem, 4vw, 2.8rem);
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      margin-bottom: 1.25rem;
+    }
+    .about-text p {
+      font-size: 0.95rem;
+      font-weight: 300;
+      color: var(--ink-muted);
+      line-height: 1.8;
+    }
+    .about-stats {
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+    .stat-item {
+      background: var(--surface);
+      padding: 1.5rem 1.75rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .stat-label { font-size: 0.875rem; color: var(--ink-muted); }
+    .stat-value { font-family: 'DM Serif Display', serif; font-size: 1.4rem; color: var(--ink); }
+ 
+    /* ── CONTACT ── */
+    .contact-card {
+      background: #0F2878;
+      color: #fff;
+      border-radius: var(--radius);
+      padding: 3.5rem;
+    }
+    .contact-card h2 {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(1.8rem, 4vw, 2.5rem);
+      letter-spacing: -0.02em;
+      margin-bottom: 0.75rem;
+    }
+    .contact-card p { font-size: 0.95rem; font-weight: 300; opacity: 0.6; margin-bottom: 2.5rem; line-height: 1.6; }
+    .contact-info { display: flex; flex-direction: column; gap: 1rem; }
+    .contact-row {
+      display: flex; align-items: center; gap: 1rem;
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 12px;
+      padding: 1rem 1.25rem;
+    }
+    .contact-icon-box {
+      width: 36px; height: 36px; border-radius: 8px;
+      background: rgba(255,255,255,0.12);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 16px; flex-shrink: 0;
+    }
+    .contact-detail { display: flex; flex-direction: column; }
+    .contact-detail span:first-child { font-size: 0.72rem; opacity: 0.45; text-transform: uppercase; letter-spacing: 0.08em; }
+    .contact-detail span:last-child { font-size: 0.95rem; font-weight: 500; margin-top: 2px; }
+ 
+    /* ── FOOTER ── */
+    footer {
+      text-align: center;
+      padding: 2rem;
+      font-size: 0.8rem;
+      color: var(--ink-faint);
+      border-top: 1px solid var(--border);
+    }
+ 
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+ 
+    /* ── RESPONSIVE ── */
+    @media (max-width: 680px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-links { display: none; }
+      .hero { padding: 7rem 1.5rem 4rem; }
+      .hero-flag { display: none; }
+      .section { padding: 4rem 1.5rem; }
+      .divider { margin: 0 1.5rem; }
+      .about-grid { grid-template-columns: 1fr; gap: 2rem; }
+      .contact-card { padding: 2rem 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+ 
+  <nav>
+    <a class="nav-logo" href="#">Elian Rosales</a>
+    <ul class="nav-links">
+      <li><a href="#servicios">Servicios</a></li>
+      <li><a href="#sobre-mi">Sobre mí</a></li>
+      <li><a href="#contacto">Contacto</a></li>
+    </ul>
+  </nav>
+ 
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-eyebrow">
+      <span class="dot"></span>
+      Disponible para proyectos
+    </div>
+    <h1>Hago que tu negocio<br>exista <em>en línea.</em></h1>
+    <p class="hero-sub">
+      Diseño y desarrollo páginas web, tiendas online y soluciones digitales a medida. Trabajo con vos desde la idea hasta el resultado final.
+    </p>
+    <div class="hero-actions">
+      <a href="#contacto" class="btn-primary">Hablemos</a>
+      <a href="#servicios" class="btn-secondary">Ver servicios</a>
+    </div>
+    <div class="hero-flag">🇦🇷 Argentina</div>
+  </section>
+ 
+  <hr class="divider" />
+ 
+  <!-- SERVICIOS -->
+  <section class="section" id="servicios">
+    <h2><p class="section-label">Servicios</p></h2>
+    <div class="services-grid">
+      <div class="service-item">
+        <div class="service-num">01</div>
+        <h3>Páginas web</h3>
+        <p>Sitios modernos, rápidos y responsivos adaptados a tu negocio o proyecto personal.</p>
+      </div>
+      <div class="service-item">
+        <div class="service-num">02</div>
+        <h3>Tiendas online</h3>
+        <p>E-commerce completo con carrito de compras, pagos y gestión de productos.</p>
+      </div>
+      <div class="service-item">
+        <div class="service-num">03</div>
+        <h3>Diseño gráfico</h3>
+        <p>Identidad visual, logos, banners y materiales digitales para tu marca.</p>
+      </div>
+      <div class="service-item">
+        <div class="service-num">04</div>
+        <h3>SEO</h3>
+        <p>Optimización para que tu sitio aparezca en los primeros resultados de Google.</p>
+      </div>
+      <div class="service-item">
+        <div class="service-num">05</div>
+        <h3>Landing pages</h3>
+        <p>Páginas de aterrizaje diseñadas para convertir visitantes en clientes.</p>
+      </div>
+      <div class="service-item">
+        <div class="service-num">06</div>
+        <h3>Mantenimiento web</h3>
+        <p>Actualizaciones, mejoras y soporte continuo para que tu sitio siempre funcione.</p>
+      </div>
+    </div>
+  </section>
+ 
+  <hr class="divider" />
+ 
+  <!-- SOBRE MÍ -->
+  <section class="section" id="sobre-mi">
+    <h2><p class="section-label">Sobre mí</p></h2>
+    <div class="about-grid">
+      <div class="about-text">
+        <h2>Desarrollador web freelance argentino</h2>
+        <p>
+          Me especializo en crear experiencias digitales que combinan buen diseño con funcionalidad real. Trabajo de forma independiente, lo que me permite dedicarme de lleno a cada proyecto y mantener comunicación directa con mis clientes.
+          <br><br>
+          Si tenés una idea o necesitás mejorar tu presencia online, yo te ayudo a hacerlo realidad.
+        </p>
+      </div>
+      <div class="about-stats">
+        <div class="stat-item">
+          <span class="stat-label">Nacionalidad</span>
+          <span class="stat-value">🇦🇷 Argentina</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-label">Modalidad</span>
+          <span class="stat-value">Freelance</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-label">Disponibilidad</span>
+          <span class="stat-value">Inmediata</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-label">Trabajo</span>
+          <span class="stat-value">100% online</span>
+        </div>
+      </div>
+    </div>
+  </section>
+ 
+  <hr class="divider" />
+ 
+  <!-- CONTACTO -->
+  <section class="section" id="contacto">
+    <h2><p class="section-label">Contacto</p></h2>
+    <div class="contact-card">
+      <h2>¿Tenés un proyecto?<br>Hablemos.</h2>
+      <p>Respondó a la brevedad. Podés escribirme por cualquiera de estos medios.</p>
+      <div class="contact-info">
+        <div class="contact-row">
+          <div class="contact-icon-box">📧</div>
+          <div class="contact-detail">
+            <h3><span>Correo electrónico</span></h3>
+            <span>rosaleselian123@gmail.com</span>
+          </div>
+        </div>
+        <div class="contact-row">
+          <div class="contact-icon-box">📞</div>
+          <div class="contact-detail">
+            <h3></h3><span>Teléfono / WhatsApp</span></h3>
+            <span>381 572-2442</span>
+          </div>
+        </div>
+        <div class="contact-row">
+          <div class="contact-icon-box">🇦🇷</div>
+          <div class="contact-detail">
+            <h3><span>Ubicación</span></h3>
+            <span>Argentina</span>
+          </div>
+        </div>
+        <div>pagina creada por Elian Rosales</div>
